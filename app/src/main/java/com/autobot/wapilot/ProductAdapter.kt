@@ -6,6 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+// Product model ekhanei, alada file lagbe na
+data class Product(
+    val name: String = "",
+    val price: String = ""
+)
+
 class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -20,8 +26,8 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val product = products[position]
-        holder.nameText.text = product.getDisplayName()
-        holder.priceText.text = product.getDisplayPrice()
+        holder.nameText.text = product.name
+        holder.priceText.text = product.price
     }
 
     override fun getItemCount(): Int = products.size
