@@ -4,7 +4,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+
 data class Product(val productName: String = "", val productPrice: String = "", val name: String = "", val price: String = "")
+
 class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val nameText: TextView = view.findViewById(R.id.productName)
