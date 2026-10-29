@@ -1,21 +1,35 @@
 package com.autobot.wapilot
-import android.content.Intent
+import android.app.Activity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         
-        findViewById<Button>(R.id.fabAdd).setOnClickListener {
-            Toast.makeText(this, "Add Product Clicked", Toast.LENGTH_SHORT).show()
+        // Code diye UI banailam, kono XML lagbe na - 100% crash free
+        val layout = LinearLayout(this)
+        layout.orientation = LinearLayout.VERTICAL
+        layout.setPadding(50, 100, 50, 50)
+        layout.gravity = android.view.Gravity.CENTER
+        
+        val tv = TextView(this)
+        tv.text = "Dokan AI V2\nSUCCESSFULLY OPENED!"
+        tv.textSize = 22f
+        tv.gravity = android.view.Gravity.CENTER
+        layout.addView(tv)
+        
+        val btn = Button(this)
+        btn.text = "TEST OK"
+        btn.setOnClickListener { 
+            Toast.makeText(this, "App kaj korche!", Toast.LENGTH_LONG).show() 
         }
-        findViewById<Button>(R.id.fabAI).setOnClickListener {
-            Toast.makeText(this, "AI Chat Clicked", Toast.LENGTH_SHORT).show()
-        }
-        Toast.makeText(this, "SUCCESS: App Opened!", Toast.LENGTH_LONG).show()
+        layout.addView(btn)
+        
+        setContentView(layout)
+        Toast.makeText(this, "App Opened!", Toast.LENGTH_SHORT).show()
     }
 }
