@@ -5,7 +5,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-data class Product(val productName: String = "", val productPrice: String = "")
+data class Product(
+    val productName: String = "",
+    val productPrice: String = "",
+    val name: String = "",
+    val price: String = ""
+) {
+    fun getDisplayName() = productName.ifEmpty { name }
+    fun getDisplayPrice() = productPrice.ifEmpty { price }
+}
 
 class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -16,8 +24,8 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false))
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.nameText.text = products[position].productName
-        holder.priceText.text = products[position].productPrice
+        holder.nameText.text = products[position].getDisplayName()
+        holder.priceText.text = products[position].getDisplayPrice()
     }
     override fun getItemCount() = products.size
 }
