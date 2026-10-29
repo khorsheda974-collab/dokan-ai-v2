@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+
 class ProductAdapter(var list: List<Product>, private val db: AppDatabase) : RecyclerView.Adapter<ProductAdapter.VH>() {
     class VH(v: View) : RecyclerView.ViewHolder(v) {
         val img: ImageView = v.findViewById(R.id.img)
@@ -15,15 +16,41 @@ class ProductAdapter(var list: List<Product>, private val db: AppDatabase) : Rec
         val btnPlus: TextView = v.findViewById(R.id.btnPlus)
         val btnMinus: TextView = v.findViewById(R.id.btnMinus)
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH = VH(LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false))
+    
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        return VH(LayoutInflater.from(parent.context).inflate(R.layout.item_product, parent, false))
+    }
+    
     override fun onBindViewHolder(holder: VH, position: Int) {
         val p = list[position]
         holder.name.text = "${p.productName} (${p.colourName})"
         holder.price.text = "৳${p.productPrice}"
         holder.stock.text = "Stock: ${p.stock}"
-        try { holder.img.setImageURI(Uri.parse(p.imageUri)) } catch(e: Exception) {}
-        holder.btnPlus.setOnClickListener { db.productDao().update(p.copy(stock = p.stock+1)); list = db.productDao().getAll(); notifyDataSetChanged() }
-        holder.btnMinus.setOnClickListener { if(p.stock>0){ db.productDao().update(p.copy(stock = p.stock-1)); list = db.productDao().getAll(); notifyDataSetChanged() } }
+        
+        try {
+            if(p.imageUri.isNotEmpty()) {
+                holder.img.setImageURI(Uri.parse(p.imageUri))
+            } else {
+                holder.img.setImageResource(android.R.drawable.ic_menu_gallery)
+            }
+        } catch(e: Exception) {
+            holder.img.setImageResource(android.R.drawable.ic_menu_gallery)
+        }
+        
+        holder.btnPlus.setOnClickListener {
+            db.productDao().update(p.copy(stock = p.stock+1))
+            list = db.productDao().getAll()
+            notifyDataSetChanged()
+        }
+        
+        holder.btnMinus.setOnClickListener {
+            if(p.stock>0){
+                db.productDao().update(p.copy(stock = p.stock-1))
+                list = db.productDao().getAll()
+                notifyDataSetChanged()
+            }
+        }
     }
+    
     override fun getItemCount() = list.size
 }
