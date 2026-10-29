@@ -16,7 +16,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
-        android:contentDescription="Add"
         android:src="@android:drawable/ic_input_add" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -26,7 +25,6 @@
         android:layout_above="@id/fabAdd"
         android:layout_alignParentEnd="true"
         android:layout_margin="16dp"
-        android:contentDescription="AI"
         android:src="@android:drawable/ic_search_category_default" />
 
 </RelativeLayout>
